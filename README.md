@@ -242,7 +242,10 @@ python3 metrics/build_eval_results.py
 
 **未入库的内容**：模型权重（4 个 checkpoint 共 3.8 GB，可由训练脚本复现）、评估录制的 mp4 视频、训练原始日志（未保存到文件，见上）。
 
-本地也已清理 `checkpoints/050000`、`checkpoints/100000`（评估用不到）；当前保留 `150000` 与 `200000`，`last` 指向 `200000`。要复现上面任意一次评估，只需把 `--policy.path` 指向对应步数的 `pretrained_model`。
+本地已清理 `checkpoints/050000`、`100000`、`150000`（跑完对应评估后即清理），当前只保留 `200000`，`last` 指向它。
+
+- **200K 的 7 次评估可以本地复现**：把 `--policy.path` 指向 `checkpoints/200000/pretrained_model` 即可
+- **150K 那一次无法再从本地权重复现**（权重已删），但它的原始产物 `metrics/raw/eval_C150k_nas20.json` 已入库，数字仍可核对
 
 ---
 
