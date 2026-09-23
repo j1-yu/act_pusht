@@ -27,31 +27,33 @@ HERE = Path(__file__).resolve().parent
 RAW_DIR = HERE / "raw"
 OUT_PATH = HERE / "eval_results.json"
 
-# 每次评估的推理设置。
+# 每次评估的设置：(tag, checkpoint 步数, n_action_steps, temporal_ensemble_coeff, 说明)
 # 生成方式见 scripts/run_act_std_eval.sh（tag A/B/C）与「时间集成系数扫描」部分。
-# 三次 A/B/C 与四次扫描共用一个权重、同一个 seed，只改推理参数。
-RUNS: list[tuple[str, int, float | None, str]] = [
-    ("A_nas1", 1, None, "基线：不开时间集成，每步重新规划"),
-    ("B_te0.01_nas1", 1, 0.01, "论文默认做法：开时间集成"),
-    ("C_nas20", 20, None, "一次预测执行 20 步后重新规划"),
-    ("te0.05_nas1", 1, 0.05, "时间集成系数扫描"),
-    ("te0.1_nas1", 1, 0.1, "时间集成系数扫描"),
-    ("te0.5_nas1", 1, 0.5, "时间集成系数扫描"),
-    ("te1.0_nas1", 1, 1.0, "时间集成系数扫描"),
+# 前 7 次共用一个权重（step 200000）、同一个 seed，只改推理参数；
+# 最后 1 次（C150k_nas20）改用 step 150000 的权重，用来回答「多训 5 万步值不值」。
+RUNS: list[tuple[str, int, int, float | None, str]] = [
+    ("A_nas1", 200000, 1, None, "基线：不开时间集成，每步重新规划"),
+    ("B_te0.01_nas1", 200000, 1, 0.01, "论文默认做法：开时间集成"),
+    ("C_nas20", 200000, 20, None, "一次预测执行 20 步后重新规划"),
+    ("te0.05_nas1", 200000, 1, 0.05, "时间集成系数扫描"),
+    ("te0.1_nas1", 200000, 1, 0.1, "时间集成系数扫描"),
+    ("te0.5_nas1", 200000, 1, 0.5, "时间集成系数扫描"),
+    ("te1.0_nas1", 200000, 1, 1.0, "时间集成系数扫描"),
+    ("C150k_nas20", 150000, 20, None, "同 C 配置，但用 step 150000 的 checkpoint"),
 ]
 
 META = {
-    "policy_path": "outputs/train/act_pusht_std/checkpoints/last/pretrained_model",
-    "checkpoint_step": 200000,
+    "policy_path": "outputs/train/act_pusht_std/checkpoints/<step>/pretrained_model",
     "env": "pusht",
     "eval_n_episodes": 50,
     "eval_batch_size": 50,
     "seed": 1000,
     "success_definition": "PushT 环境内 coverage > 0.95（即 T 块与目标区域重叠率超过 95%）",
     "comparable": (
-        "全部 7 次评估使用同一份权重（step 200000）、同一 seed=1000、同样 50 个 "
-        "episode。LeRobot 由 seed 推出逐 episode 初始局面（start_seed + i），"
-        "因此各次面对的是同一批初始局面，数字可直接比较。"
+        "全部 8 次评估使用同一 seed=1000、同样 50 个 episode。LeRobot 由 seed 推出"
+        "逐 episode 初始局面（start_seed + i），因此各次面对的是同一批初始局面，"
+        "数字可直接比较。其中 7 次用 step 200000 的权重（只改推理设置），"
+        "1 次（C150k_nas20）改用 step 150000 的权重（只改 checkpoint）。"
     ),
 }
 
@@ -134,8 +136,9 @@ def load_run(tag: str) -> dict:
 
 def main() -> None:
     runs: list[dict] = []
-    for tag, nas, te, note in RUNS:
+    for tag, step, nas, te, note in RUNS:
         result = load_run(tag)
+        result["checkpoint_step"] = step
         result["n_action_steps"] = nas
         result["temporal_ensemble_coeff"] = te
         result["note"] = note
@@ -164,14 +167,17 @@ def main() -> None:
     payload = {
         "meta": META,
         "runs": runs,
-        "comparisons_vs_best": comparisons,
+        # comparisons 以 C_nas20（step 200000，n_action_steps=20）为基准。
+        # 其中最后一行即「150K vs 200K」的检验。
+        "comparisons_vs_C_nas20": comparisons,
     }
     OUT_PATH.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n")
     print(f"已写出 {OUT_PATH.relative_to(HERE.parent)}")
     for r in runs:
         ci = r["pc_success_ci95"]
         print(
-            f"  {r['tag']:<16} nas={r['n_action_steps']:<3} te={str(r['temporal_ensemble_coeff']):<5} "
+            f"  {r['tag']:<16} step={r['checkpoint_step']:<6} nas={r['n_action_steps']:<3} "
+            f"te={str(r['temporal_ensemble_coeff']):<5} "
             f"{r['n_success']:>2}/{r['n_episodes']} = {r['pc_success']:>5.1f}%  "
             f"95%CI [{ci[0]:.1f}, {ci[1]:.1f}]  avg_max_reward={r['avg_max_reward']:.4f}"
         )

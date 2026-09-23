@@ -1,13 +1,12 @@
 {
   "meta": {
-    "policy_path": "outputs/train/act_pusht_std/checkpoints/last/pretrained_model",
-    "checkpoint_step": 200000,
+    "policy_path": "outputs/train/act_pusht_std/checkpoints/<step>/pretrained_model",
     "env": "pusht",
     "eval_n_episodes": 50,
     "eval_batch_size": 50,
     "seed": 1000,
     "success_definition": "PushT 环境内 coverage > 0.95（即 T 块与目标区域重叠率超过 95%）",
-    "comparable": "全部 7 次评估使用同一份权重（step 200000）、同一 seed=1000、同样 50 个 episode。LeRobot 由 seed 推出逐 episode 初始局面（start_seed + i），因此各次面对的是同一批初始局面，数字可直接比较。"
+    "comparable": "全部 8 次评估使用同一 seed=1000、同样 50 个 episode。LeRobot 由 seed 推出逐 episode 初始局面（start_seed + i），因此各次面对的是同一批初始局面，数字可直接比较。其中 7 次用 step 200000 的权重（只改推理设置），1 次（C150k_nas20）改用 step 150000 的权重（只改 checkpoint）。"
   },
   "runs": [
     {
@@ -181,6 +180,7 @@
           195.975625
         ]
       },
+      "checkpoint_step": 200000,
       "n_action_steps": 1,
       "temporal_ensemble_coeff": null,
       "note": "基线：不开时间集成，每步重新规划"
@@ -356,6 +356,7 @@
           49.290902
         ]
       },
+      "checkpoint_step": 200000,
       "n_action_steps": 1,
       "temporal_ensemble_coeff": 0.01,
       "note": "论文默认做法：开时间集成"
@@ -531,6 +532,7 @@
           48.804846
         ]
       },
+      "checkpoint_step": 200000,
       "n_action_steps": 20,
       "temporal_ensemble_coeff": null,
       "note": "一次预测执行 20 步后重新规划"
@@ -706,6 +708,7 @@
           58.371392
         ]
       },
+      "checkpoint_step": 200000,
       "n_action_steps": 1,
       "temporal_ensemble_coeff": 0.05,
       "note": "时间集成系数扫描"
@@ -881,6 +884,7 @@
           68.978867
         ]
       },
+      "checkpoint_step": 200000,
       "n_action_steps": 1,
       "temporal_ensemble_coeff": 0.1,
       "note": "时间集成系数扫描"
@@ -1056,6 +1060,7 @@
           3.952186
         ]
       },
+      "checkpoint_step": 200000,
       "n_action_steps": 1,
       "temporal_ensemble_coeff": 0.5,
       "note": "时间集成系数扫描"
@@ -1231,12 +1236,189 @@
           3.914463
         ]
       },
+      "checkpoint_step": 200000,
       "n_action_steps": 1,
       "temporal_ensemble_coeff": 1.0,
       "note": "时间集成系数扫描"
+    },
+    {
+      "tag": "C150k_nas20",
+      "raw_file": "raw/eval_C150k_nas20.json",
+      "n_episodes": 50,
+      "n_success": 18,
+      "pc_success": 36.0,
+      "pc_success_ci95": [
+        24.14,
+        49.86
+      ],
+      "avg_max_reward": 0.9184,
+      "avg_sum_reward": 107.5925,
+      "eval_s": 36.2,
+      "per_episode": {
+        "success": [
+          true,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "max_reward": [
+          1.0,
+          0.983189,
+          0.996605,
+          0.982962,
+          1.0,
+          0.909466,
+          0.78083,
+          0.539928,
+          0.670692,
+          1.0,
+          0.997233,
+          1.0,
+          0.97893,
+          0.99054,
+          1.0,
+          0.993416,
+          0.982224,
+          0.500797,
+          0.975599,
+          0.89962,
+          0.995987,
+          1.0,
+          1.0,
+          0.599111,
+          0.957693,
+          1.0,
+          0.940512,
+          1.0,
+          1.0,
+          0.904348,
+          0.961799,
+          0.995356,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.982899,
+          0.945522,
+          0.181467,
+          0.938814,
+          1.0,
+          0.59605,
+          1.0,
+          1.0,
+          0.875654,
+          0.975891,
+          0.976089,
+          0.981501,
+          0.931477,
+          1.0
+        ],
+        "sum_reward": [
+          183.561417,
+          71.236362,
+          154.423575,
+          133.534945,
+          50.687837,
+          143.206888,
+          106.69535,
+          82.099675,
+          143.209169,
+          81.683179,
+          207.783015,
+          91.967166,
+          152.202932,
+          82.435452,
+          124.146142,
+          225.698687,
+          136.041612,
+          64.550223,
+          155.937549,
+          121.418905,
+          136.661204,
+          41.032384,
+          49.04844,
+          59.208278,
+          109.627726,
+          100.86935,
+          137.704268,
+          73.166952,
+          42.893553,
+          81.865355,
+          107.364303,
+          188.142222,
+          134.458523,
+          50.515128,
+          31.946788,
+          58.346956,
+          80.837086,
+          92.676316,
+          2.071687,
+          94.479234,
+          64.842956,
+          124.996765,
+          59.785447,
+          98.877912,
+          146.190683,
+          175.892424,
+          119.03421,
+          183.459768,
+          68.478871,
+          152.629557
+        ]
+      },
+      "checkpoint_step": 150000,
+      "n_action_steps": 20,
+      "temporal_ensemble_coeff": null,
+      "note": "同 C 配置，但用 step 150000 的 checkpoint"
     }
   ],
-  "comparisons_vs_best": [
+  "comparisons_vs_C_nas20": [
     {
       "a": "C_nas20",
       "b": "A_nas1",
@@ -1290,6 +1472,15 @@
       "difference_pp": 52.0,
       "fisher_exact_p_two_sided": 3.47e-10,
       "significant_at_0.05": true
+    },
+    {
+      "a": "C_nas20",
+      "b": "C150k_nas20",
+      "a_success": "26/50",
+      "b_success": "18/50",
+      "difference_pp": 16.0,
+      "fisher_exact_p_two_sided": 0.158,
+      "significant_at_0.05": false
     }
   ]
 }
