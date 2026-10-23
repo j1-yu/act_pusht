@@ -1,0 +1,12 @@
+{
+  "model": "act_pusht_std/checkpoints/200000/pretrained_model",
+  "device": "NVIDIA GeForce RTX 5060 Laptop GPU",
+  "batch_size": 1,
+  "predicted_chunk_size": 100,
+  "warmup": 30,
+  "repeats": 200,
+  "mean_ms": 6.705,
+  "median_ms": 6.351,
+  "p95_ms": 8.434,
+  "scope": "ACT predict_action_chunk forward only; excludes preprocessing, simulation and video"
+}

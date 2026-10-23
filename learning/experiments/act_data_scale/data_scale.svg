@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="410" viewBox="0 0 760 410">
+<rect width="100%" height="100%" fill="white"/>
+<style>text{font-family:DejaVu Sans,sans-serif;fill:#222}.grid{stroke:#ddd;stroke-width:1}.axis{stroke:#333;stroke-width:1.5}.success{fill:none;stroke:#2563eb;stroke-width:3}.coverage{fill:none;stroke:#f97316;stroke-width:3}</style>
+<text x="380" y="23" text-anchor="middle" font-size="18" font-weight="bold">ACT PushT：训练数据量与闭环表现</text>
+<line class="grid" x1="70" y1="345.0" x2="730" y2="345.0"/>
+<text x="60" y="350.0" text-anchor="end" font-size="13">0</text>
+<line class="grid" x1="70" y1="283.0" x2="730" y2="283.0"/>
+<text x="60" y="288.0" text-anchor="end" font-size="13">20</text>
+<line class="grid" x1="70" y1="221.0" x2="730" y2="221.0"/>
+<text x="60" y="226.0" text-anchor="end" font-size="13">40</text>
+<line class="grid" x1="70" y1="159.0" x2="730" y2="159.0"/>
+<text x="60" y="164.0" text-anchor="end" font-size="13">60</text>
+<line class="grid" x1="70" y1="97.0" x2="730" y2="97.0"/>
+<text x="60" y="102.0" text-anchor="end" font-size="13">80</text>
+<line class="grid" x1="70" y1="35.0" x2="730" y2="35.0"/>
+<text x="60" y="40.0" text-anchor="end" font-size="13">100</text>
+<line class="axis" x1="70" y1="35" x2="70" y2="345"/>
+<line class="axis" x1="70" y1="345" x2="730" y2="345"/>
+<text x="70.0" y="370" text-anchor="middle" font-size="13">10%</text>
+<text x="180.0" y="370" text-anchor="middle" font-size="13">25%</text>
+<text x="363.3" y="370" text-anchor="middle" font-size="13">50%</text>
+<text x="730.0" y="370" text-anchor="middle" font-size="13">100%</text>
+<text x="400.0" y="396" text-anchor="middle" font-size="14">训练演示数据比例</text>
+<text x="17" y="190.0" text-anchor="middle" font-size="14" transform="rotate(-90 17 190.0)">百分比（%）</text>
+<polyline class="success" points="70.0,326.4 180.0,326.4 363.3,295.4 730.0,183.8"/>
+<polyline class="coverage" points="70.0,231.0 180.0,191.6 363.3,92.2 730.0,59.2"/>
+<circle cx="70.0" cy="326.4" r="5" fill="#2563eb"/>
+<text x="70.0" y="341.4" text-anchor="middle" font-size="12" fill="#2563eb">6.0</text>
+<circle cx="70.0" cy="231.0" r="5" fill="#f97316"/>
+<text x="70.0" y="222.0" text-anchor="middle" font-size="12" fill="#f97316">36.8</text>
+<circle cx="180.0" cy="326.4" r="5" fill="#2563eb"/>
+<text x="180.0" y="341.4" text-anchor="middle" font-size="12" fill="#2563eb">6.0</text>
+<circle cx="180.0" cy="191.6" r="5" fill="#f97316"/>
+<text x="180.0" y="182.6" text-anchor="middle" font-size="12" fill="#f97316">49.5</text>
+<circle cx="363.3" cy="295.4" r="5" fill="#2563eb"/>
+<text x="363.3" y="310.4" text-anchor="middle" font-size="12" fill="#2563eb">16.0</text>
+<circle cx="363.3" cy="92.2" r="5" fill="#f97316"/>
+<text x="363.3" y="83.2" text-anchor="middle" font-size="12" fill="#f97316">81.5</text>
+<circle cx="730.0" cy="183.8" r="5" fill="#2563eb"/>
+<text x="730.0" y="198.8" text-anchor="middle" font-size="12" fill="#2563eb">52.0</text>
+<circle cx="730.0" cy="59.2" r="5" fill="#f97316"/>
+<text x="730.0" y="50.2" text-anchor="middle" font-size="12" fill="#f97316">92.2</text>
+<line x1="500" y1="48" x2="530" y2="48" class="success"/><text x="538" y="53" font-size="13">成功率</text>
+<line x1="600" y1="48" x2="630" y2="48" class="coverage"/><text x="638" y="53" font-size="13">平均最高 coverage</text>
+</svg>

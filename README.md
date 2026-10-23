@@ -2,7 +2,17 @@
 
 复现 **ACT: Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware**（Zhao et al., RSS 2023）中的 Action Chunking Transformer，在 PushT 任务上训练视觉运动策略。
 
-本仓库基于 [LeRobot](https://github.com/huggingface/lerobot) 运行，**策略代码为官方实现，非从零复现**。目标是把标准 ACT 配置跑通，并把「哪些推理设置真正决定成败」这件事量化清楚。
+本仓库是我在 PushT 仿真任务上学习和评估 ACT 的项目。训练与策略实现基于 [LeRobot](https://github.com/huggingface/lerobot) 官方代码，**我没有从零实现 ACT**；我完成了训练配置、数据子集设计、闭环评估、受控变量实验、逐回合结果统计和失败案例分析。
+
+当前项目有三类实验：训练演示数据量、动作重规划间隔，以及输入视觉受到扰动时的鲁棒性。仓库保留脚本、原始 episode 指标、结果汇总和代表性视频，方便读者检查实验过程与限制。
+
+## 新增：训练数据规模受控实验
+
+固定 ACT 架构、200K 次参数更新和同一批 50 个测试场景，只改变训练演示数据量。第一轮结果为：10% 数据成功率 6%、25% 为 6%、50% 为 16%、100% 为 52%。50% 和 100% 各补了第二个训练 seed 后，两组平均成功率分别为 23% 和 45%（每组两个 seed，仍属初步结果）。
+
+一页实验总结见 [实验报告](learning/experiments/act_data_scale/REPORT.md)；实验设计、置信区间、逐场景原始结果、复算脚本和图表见 [完整实验记录](learning/experiments/act_data_scale/README.md)。
+
+扩展评估现统一使用确定性 CUDA 设置。固定全量 ACT checkpoint 时，`n_action_steps=1/5/10/20` 的成功率为 **0%/20%/48%/38%**；固定 `n_action_steps=20`、同一批 50 个场景时，亮度乘 0.7、高斯噪声 `sigma=0.1`、20% 画面面积遮挡的成功率分别为 **42%/6%/0%**（干净输入 38%）。旧官方评估基线为 20 步 52%，与确定性复测协议不一致，因此扩展实验结论只在统一的确定性评估内比较。seed 1002 的干净、噪声和遮挡 rollout 视频及配对统计见上述实验目录。
 
 ## 演示视频
 
@@ -240,7 +250,7 @@ README 中的每个数字都能核对：
 python3 metrics/build_eval_results.py
 ```
 
-**未入库的内容**：模型权重（4 个 checkpoint 共 3.8 GB，可由训练脚本复现）、评估录制的 mp4 视频、训练原始日志（未保存到文件，见上）。
+**未入库的内容**：模型权重（4 个 checkpoint 共 3.8 GB，可由训练脚本复现）、除实验目录中三个代表性案例外的评估视频、训练原始日志。数据规模、动作执行长度和视觉扰动实验的正式指标、复算脚本及代表性失败案例见 [`learning/experiments/act_data_scale/`](learning/experiments/act_data_scale/)。
 
 本地已清理 `checkpoints/050000`、`100000`、`150000`（跑完对应评估后即清理），当前只保留 `200000`，`last` 指向它。
 
@@ -276,7 +286,7 @@ python3 metrics/build_eval_results.py
 
 ## 历史记录（v5 配置）
 
-仓库里保留的 `train_command.sh` 与 `train_act_v5.log` 属于**上一轮实验（v5）**，配置与本轮不同，仅供追溯：
+仓库里保留的 `train_command.sh` 属于**上一轮实验（v5）**，配置与本轮不同，仅供追溯；旧的训练日志不再纳入版本控制：
 
 | | v5 | 本轮（std） |
 |---|---|---|

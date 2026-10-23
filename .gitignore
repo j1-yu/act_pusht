@@ -1,0 +1,22 @@
+# Local learning scratchpad and generated checkpoints.
+/learning/README.md
+/learning/*.py
+/learning/runs/
+**/__pycache__/
+
+# Repeated or diagnostic PushT evaluations kept locally for debugging.
+/learning/experiments/act_data_scale/*_seed*.log
+/learning/experiments/act_data_scale/eval_*/
+/learning/experiments/act_data_scale/action_det_nas*/
+/learning/experiments/act_data_scale/visual_final_*/
+/learning/experiments/act_data_scale/case_seed1002_*/
+/learning/experiments/act_data_scale/eval_*/videos/
+/learning/experiments/act_data_scale/visual_final_*/videos/
+/learning/experiments/act_data_scale/eval_100pct_nas*/
+/learning/experiments/act_data_scale/eval_100pct_seed2000_nas*/
+/learning/experiments/act_data_scale/visual_cases*/
+/learning/experiments/act_data_scale/visual_determinism_check*/
+/learning/experiments/act_data_scale/visual_eval*/
+
+# Removed historical training log.
+/train_act_v5.log
