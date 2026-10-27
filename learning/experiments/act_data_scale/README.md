@@ -86,7 +86,7 @@ python \
   outputs/train/act_pusht_std/checkpoints/200000/pretrained_model
 ```
 
-为避免把本机路径发布到网上，公开原始 JSON 保留每个 episode 的 reward、coverage 和成功标记，但去掉运行时视频路径；代表性视频单独放在 `media/`。
+为避免把本机路径发布到网上，公开原始 JSON 保留每个 episode 的 reward、coverage 和成功标记，但去掉运行时视频路径；代表性 GIF 单独放在 `media/`，可直接在 GitHub 页面预览。
 
 ## 项目当前阶段与下一步
 
@@ -122,9 +122,9 @@ python \
 
 同一场景的三个 rollout 视频可直观看到退化：seed 1002 在干净图像下 coverage=1.000，在噪声下为 0.933，在 20% 遮挡下为 0.126。
 
-- [seed 1002：干净输入，成功](media/seed1002_clean.mp4)
-- [seed 1002：高斯噪声，未成功](media/seed1002_noise.mp4)
-- [seed 1002：20% 面积遮挡，失败](media/seed1002_occlusion.mp4)
+- [seed 1002：干净输入，成功](media/seed1002_clean.gif)
+- [seed 1002：高斯噪声，未成功](media/seed1002_noise.gif)
+- [seed 1002：20% 面积遮挡，失败](media/seed1002_occlusion.gif)
 
 所有正式比较结果及配对统计见 `extended_results.json`；逐 episode 原始数据集中在 `results/raw/`，重算表格可运行 `build_extended_results.py`。评估器是 `eval_visual_perturbation.py`。该评估器默认使用 CUDA 确定性算法，可用 `--render-episodes 2` 保存视频。
 
