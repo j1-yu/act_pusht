@@ -4,6 +4,20 @@
 /learning/runs/
 **/__pycache__/
 
+# Public learning path: curated source files and the reproducibility guide.
+!/learning/README.md
+!/learning/bc_pusht.py
+!/learning/bc_rollout.py
+!/learning/action_chunking.py
+!/learning/action_chunking_transformer.py
+!/learning/action_chunking_cvae.py
+!/learning/visual_action_chunking.py
+!/learning/visual_proprio_action_chunking.py
+!/learning/visual_proprio_action_chunking_transformer.py
+!/learning/visual_rollout_diagnostic.py
+!/learning/collect_dagger.py
+!/learning/train_dagger_one_step.py
+
 # Repeated or diagnostic PushT evaluations kept locally for debugging.
 /learning/experiments/act_data_scale/*_seed*.log
 /learning/experiments/act_data_scale/eval_*/
